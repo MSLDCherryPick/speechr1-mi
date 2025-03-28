@@ -43,7 +43,7 @@ def _get_message(obj_dict):
     choice_str = f"Please choose the answer from the following options: {obj_dict['choices']}."
     question_template = f"{obj_dict['question']} {choice_str} Output the final answer in <answer> </answer>."
     # If you want to improve the thinking process, uncomment the next line and design your strategy.
-    # question_template = f"{obj_dict['question']} {choice_str} Output the thinking process in <think> </think> and final answer in <answer> </answer>."
+    question_template = f"{obj_dict['question']} {choice_str} Output the thinking process in <think> </think> and final answer in <answer> </answer>."
     print(question_template)
     message = [
         {
@@ -58,6 +58,7 @@ def _get_message(obj_dict):
 
 
 def main():
+    # import pdb; pdb.set_trace()
     parser = HfArgumentParser(TestArguments)
     data_args = parser.parse_args_into_dataclasses()[0]
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -102,6 +103,7 @@ def main():
         response = qwen2_audio_processor.batch_decode(
             generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
         )
+        # import pdb; pdb.set_trace()
         all_outputs.extend(response)
         print(f"Processed batch {i//batch_size + 1}/{(len(datas) + batch_size - 1)//batch_size}")
 

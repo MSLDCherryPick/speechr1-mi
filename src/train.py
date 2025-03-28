@@ -50,7 +50,7 @@ def main():
         deepspeed=data_args.config_path, 
         max_prompt_length=512, 
         per_device_train_batch_size=1, 
-        gradient_accumulation_steps=2, 
+        gradient_accumulation_steps=8, 
         logging_steps=1, 
         bf16=True,
         report_to="wandb" if data_args.use_wandb == "true" else [],
@@ -61,7 +61,7 @@ def main():
         save_steps=100, 
         save_only_model=True, 
         temperature=1.0,
-        num_generations=8)
+        num_generations=4)
     
     trainer = GRPOTrainer(
         model=data_args.model_name_or_path,
