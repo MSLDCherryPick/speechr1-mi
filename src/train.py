@@ -61,7 +61,8 @@ def main():
         save_steps=100, 
         save_only_model=True, 
         temperature=1.0,
-        num_generations=4)
+        num_generations=4
+    )
     
     trainer = GRPOTrainer(
         model=data_args.model_name_or_path,

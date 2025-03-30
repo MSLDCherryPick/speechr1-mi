@@ -172,11 +172,6 @@ debug*
 # Pretrained
 Qwen
 
-# Data
-data/AVQA
-data/MMAU
-
 # Work
 exp
-data
 ckpt
