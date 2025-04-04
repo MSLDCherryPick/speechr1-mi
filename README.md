@@ -3,7 +3,7 @@
 ## Introduction
 
 R1-AQA is a audio question answering (AQA) model based on `Qwen2-Audio-7B-Instruct`, optimized through reinforcement learning (RL) using the group relative policy optimization (GRPO) algorithm.
-This implementation has achieved state-of-the-art performance on MMAU *Test-mini* benchmark with only 38k post-training samples.
+This implementation has achieved state-of-the-art performance on the MMAU benchmark with only 38k post-training samples.
 
 Our main findings are as follows:
 
@@ -13,34 +13,35 @@ Our main findings are as follows:
 - Large audio language models (LALMs) still lag far behind humans auditory-language reasoning, suggesting that the RL-based approaches warrant further explorations.
 
 Additional Notes:  
+
 - The AVQA training set originally consists of approximately 40k samples. However, we use only about 38k samples because some data sources have become invalid. Other datasets using YouTube sources face a similar issue, such as AudioSet. We believe that the missing 2k samples do not have a significant impact on the training results.
 - The statement about the 8.2B parameters is based on the *Qwen2-Audio Technical Report*.
 
-### Table: Accuracies (%) on MMAU Test-mini benchmark
+### Table: Accuracies (%) on the MMAU benchmark
 
-| Model                                      | Method                  | Sound  | Music  | Speech | Average |
-|--------------------------------------------|-------------------------|--------|--------|--------|---------|
-| \                                          | Human\*                 | 86.31  | 78.22  | 82.17  | 82.23   |
-| Gemini Pro 2.0 Flash                       | Direct Inference\*      | 56.46  | 58.68  | 51.65  | 55.60   |
-| Audio Flamingo 2                           | Direct Inference\*      | 61.56  | **73.95** | 30.93  | 55.48   |
-| GPT4o + Strong Cap.                        | Direct Inference\*      | 57.35  | 49.70  | **64.86** | 57.30   |
-| Llama-3-8B-Instruct + Strong Cap.          | Direct Inference\*      | 50.75  | 48.93  | 55.25  | 52.10   |
-| Gemini Pro v1.5                            | Direct Inference\*      | 56.75  | 49.40  | 58.55  | 54.90   |
-| Qwen2-Audio-7B-Instruct                    | Direct Inference\*      | 54.95  | 50.98  | 42.04  | 49.20   |
-| GPT4o + Weak Cap.                          | Direct Inference\*      | 39.33  | 41.90  | 58.25  | 45.70   |
-| Llama-3-8B-Instruct + Weak Cap.            | Direct Inference\*      | 34.23  | 38.02  | 54.05  | 42.10   |
-| SALMONN                                    | Direct Inference\*      | 41.00  | 34.80  | 25.50  | 33.70   |
-| Qwen2-Audio-7B-Instruct                    | CoTA \[1\]              | 60.06  | 64.30  | 60.70  | 61.71   |
-| Qwen2-Audio-7B-Instruct                    | Zero-Shot-CoT \[2\]     | 61.86  | 56.29  | 55.26  | 57.80   |
-| **Qwen2-Audio-7B-Instruct**                | **GRPO (Ours)**         | **69.37** | 66.77  | 57.36  | **64.50** |
+| Model                                 | Method                | Test-mini | Test  | Test-mini | Test  | Test-mini | Test  | Test-mini | Test  |
+|---------------------------------------|-----------------------|-----------|-------|-----------|-------|-----------|------|------------|-------|
+| -                                     | Human\*               | 86.31     | -     | 78.22     | -     | 82.17     | -     | 82.23     | -     |
+| Gemini Pro 2.0 Flash                  | Direct Inference\*    | 56.46     | 61.73 | 58.68     | 56.53 | 51.65     | 61.53 | 55.60     | 59.93 |
+| Audio Flamingo 2                      | Direct Inference\*    | 61.56     | 65.10 | 73.95     | 72.90 | 30.93     | 40.26 | 55.48     | 59.42 |
+| GPT4o + Strong Cap.                   | Direct Inference\*    | 57.35     | 55.83 | 49.70     | 51.73 | 64.86     | 68.66 | 57.30     | 58.74 |
+| Llama-3-8B-Instruct + Strong Cap.     | Direct Inference\*    | 50.75     | 49.10 | 48.93     | 48.93 | 55.25     | 62.70 | 52.10     | 53.57 |
+| Qwen2-Audio-7B-Instruct               | Direct Inference\*    | 54.95     | 45.90 | 50.98     | 53.26 | 42.04     | 45.90 | 49.20     | 52.50 |
+| SALAMONN                              | Direct Inference\*    | 41.00     | 40.30 | 34.80     | 33.76 | 25.50     | 24.24 | 33.70     | 32.77 |
+| Qwen2-Audio-7B-Instruct               | CoTA \[1\]            | 60.06     | -     | 64.30     | -     | 60.70     | -     | 61.71     | -     |
+| Qwen2-Audio-7B-Instruct               | Zero-Shot-CoT \[2\]   | 61.86     | -     | 56.29     | -     | 55.26     | -     | 57.80     | -     |
+| **Qwen2-Audio-7B-Instruct**           | **GRPO (Ours) 1️⃣**    | 69.37     | -     | 66.77     | -     | 57.36     | -     | 64.50     | -     |
+| **Qwen2-Audio-7B-Instruct**           | **GRPO (Ours) 2️⃣**    | 68.77     | 69.76 | 64.37     | 61.40 | 63.66     | 62.70 | 65.60     | 64.36 |
 
 #### Notes
 
-\* The data are sourced from the MMAU official website: [https://sakshi113.github.io/mmau_homepage/](https://sakshi113.github.io/mmau_homepage/)  
+\* The data are sourced from the [MMAU leaderboard](https://sakshi113.github.io/mmau_homepage/#leaderboard).  
 \[1\] Xie, Zhifei, et al. "Audio-Reasoner: Improving Reasoning Capability in Large Audio Language Models." arXiv preprint arXiv:2503.02318 (2025).  
 \[2\] Ma, Ziyang, et al. "Audio-CoT: Exploring Chain-of-Thought Reasoning in Large Audio Language Model." arXiv preprint arXiv:2501.07246 (2025).  
+1️⃣ It is the original model, identical to the one on Hugging Face and described in our technical report.  
+2️⃣ It is the model submitted to the [MMAU leaderboard](https://sakshi113.github.io/mmau_homepage/#leaderboard), trained multiple times to achieve balanced results.  
 
-**Huggingface:**  
+**Hugging Face:**  
 [🤗 R1-AQA Model: mispeech/r1-aqa](https://huggingface.co/mispeech/r1-aqa)  
 
 **arXiv:**  
@@ -53,6 +54,7 @@ Additional Notes:
 
 ### Updates
 
+- 2025-03-28: Update our results on the MMAU leaderboard.
 - 2025-03-18: Support the mode containing `<think> </think>` (*GRPO + Prompt <3>* in our technical report).
 - 2025-03-17: Release the R1-AQA repository.
 
@@ -98,6 +100,7 @@ sh run_grpo.sh
 
 - Replace the `DATA_FILE` variable in the `run_grpo.sh` with your dataset path.
 - If you already have the `Qwen2-Audio-7B-Instruct` model, please modify the `MODEL_NP` variable in `run_grpo.sh` to your local model path.
+- We recommend using a GPU with 80 GB of memory.
 
 ## Testing
 
@@ -115,6 +118,8 @@ git clone https://github.com/Sakshi113/MMAU.git
 
 cd data/MMAU
 
+# ***Check if output_key = 'model_output' in evaluation.py, change it to output_key = 'model_prediction'.***
+
 #TODO you should download test-mini-audios.tar.gz to here
 ***download test-mini-audios.tar.gz to here***
 
@@ -124,20 +129,11 @@ tar -xzvf test-mini-audios.tar.gz
 cd ../../
 ```
 
-- Format Data  
-
-```bash
-# Prepare the data format file we need
-python src/utils/prepare_mmau.py \
-    --input_file data/MMAU/mmau-test-mini.json \
-    --wav_dir data/MMAU/test-mini-audios \
-    --out_file data/MMAU/mmau-mini.data
-```
-
 - Evaluation
 
 ```bash
-# Testing MMAU test-mini with in steps: [100, 200, 300, 400, 500]. 
+# Testing MMAU test-mini with in every 100 steps. 
+# You can uncomment the line 12 of test_mmau.sh to eval the entire MMAU, if you have downloaded test-audios.tar.gz.
 # You can modify the script to test other steps or change other parameters.
 sh test_mmau.sh
 ```
