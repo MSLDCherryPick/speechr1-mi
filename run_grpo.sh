@@ -5,7 +5,7 @@ MODEL_NP=Qwen/Qwen2-Audio-7B-Instruct
 DATA_FILE=data/AVQA/train_qa.data
 
 # GPU_NUM=$(nvidia-smi -L | wc -l)
-GPU_NUM=1
+GPU_NUM=4
 NODE_NUM=1
 NODE_RANK=0
 MASTER_ADDR="127.0.0.1"
